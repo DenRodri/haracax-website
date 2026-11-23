@@ -1,7 +1,11 @@
-/* Edit these details before publishing. Keep values inside the quotation marks. */
+/*
+ * HARACAX CONTACT SETTINGS
+ * Edit the values below. Keep the quotes around each value.
+ * The email and phone are examples until you replace them with confirmed details.
+ */
 window.HARACAX_CONFIG = {
-  email: "REPLACE_WITH_YOUR_BUSINESS_EMAIL",
-  phone: "REPLACE_WITH_YOUR_PHONE",
+  email: "info@haracax.com",
+  phone: "+1 000 000 0000",
   location: "Wyoming, USA",
   contactSubject: "Haracax website enquiry"
 };
