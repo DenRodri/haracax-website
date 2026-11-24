@@ -1,41 +1,34 @@
-(() => {
+(function () {
   const config = window.HARACAX_CONFIG || {};
-  const email = config.email || "info@haracax.com";
-  const phone = config.phone || "+1 000 000 0000";
+  const email = config.email || "REPLACE_WITH_YOUR_BUSINESS_EMAIL";
+  const phone = config.phone || "REPLACE_WITH_YOUR_PHONE";
   const location = config.location || "Wyoming, USA";
-  const subject = config.contactSubject || "Haracax website enquiry";
-  const emailHref = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
-  const phoneHref = `tel:${phone.replace(/[^+\d]/g, "")}`;
 
-  document.querySelectorAll("[data-contact-email]").forEach((el) => {
-    el.href = emailHref;
-    if (el.tagName !== "A" || !el.textContent.trim()) el.textContent = email;
-    else if (el.closest(".footer-contact")) el.textContent = email;
+  document.querySelectorAll("[data-email]").forEach(el => el.textContent = email);
+  document.querySelectorAll("[data-email-link], [data-contact-link]").forEach(el => {
+    el.href = email.includes("@") && !email.startsWith("REPLACE_")
+      ? "mailto:" + email
+      : "#contact";
   });
-  document.querySelectorAll("[data-contact-phone]").forEach((el) => {
-    el.href = phoneHref;
-    el.textContent = phone;
+  document.querySelectorAll("[data-phone]").forEach(el => el.textContent = phone);
+  document.querySelectorAll("[data-phone-link]").forEach(el => {
+    el.href = phone.startsWith("REPLACE_") ? "#contact" : "tel:" + phone.replace(/[^\d+]/g, "");
   });
-  document.querySelectorAll("[data-contact-location]").forEach((el) => {
-    el.textContent = location;
-  });
-
-  const year = document.getElementById("year");
-  if (year) year.textContent = new Date().getFullYear();
+  document.querySelectorAll("[data-location]").forEach(el => el.textContent = location);
+  document.getElementById("year").textContent = new Date().getFullYear();
 
   const toggle = document.querySelector(".menu-toggle");
-  const nav = document.getElementById("primary-nav");
+  const nav = document.querySelector(".main-nav");
   if (toggle && nav) {
     toggle.addEventListener("click", () => {
-      const expanded = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!expanded));
-      toggle.setAttribute("aria-label", expanded ? "Open navigation" : "Close navigation");
-      nav.classList.toggle("is-open", !expanded);
+      const open = nav.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.textContent = open ? "×" : "☰";
     });
-    nav.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => {
+    nav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
+      nav.classList.remove("open");
       toggle.setAttribute("aria-expanded", "false");
-      toggle.setAttribute("aria-label", "Open navigation");
-      nav.classList.remove("is-open");
+      toggle.textContent = "☰";
     }));
   }
 })();
